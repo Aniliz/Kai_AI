@@ -85,9 +85,17 @@
         });
 
         const data = await response.json();
-        addMessage("AI", data.reply);
+        console.log("📨 Server response:", data);
+
+        if (data.reply) {
+          addMessage("AI", data.reply);
+        } else if (data.error) {
+          addMessage("AI", `⚠️ Error: ${data.error}`);
+        } else {
+          addMessage("AI", "⚠️ No valid reply received from server.");
+        }
       } catch (error) {
-        console.error(error);
+        console.error("❌ Fetch error:", error);
         addMessage("AI", "⚠️ Could not contact server.");
       }
     }
